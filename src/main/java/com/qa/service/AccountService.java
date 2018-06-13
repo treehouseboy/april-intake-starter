@@ -36,4 +36,14 @@ public class AccountService {
 				.filter(eachAccount -> eachAccount.getFirstName().equals(firstNameOfAccount)).count();
 	}
 
+	public Boolean checkBlockedAccount() {
+		Boolean accountBlock = false;
+		for (Map.Entry<Integer,Account> entry : accountMap.entrySet()) {
+			if(entry.getValue().getAccountNumber().equals("9999")){
+				accountBlock = true;
+			}
+		}
+		return accountBlock;
+	}
+
 }
