@@ -68,5 +68,6 @@ public class AccountServiceTest {
 		service.addAccountFromMap(johnDoe);
 		Assert.assertEquals(true, service.checkBlockedAccount());	
 	}
+	
 
 }
