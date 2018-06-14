@@ -69,5 +69,4 @@ public class AccountServiceTest {
 		Assert.assertEquals(true, service.checkBlockedAccount());	
 	}
 	
-
 }

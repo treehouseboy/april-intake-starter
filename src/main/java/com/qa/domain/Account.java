@@ -1,7 +1,8 @@
 package com.qa.domain;
 
-public class Account {
 
+public class Account {
+	
 	private String firstName;
 	private String secondName;
 	private String accountNumber;
