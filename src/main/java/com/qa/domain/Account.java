@@ -9,7 +9,7 @@ import javax.persistence.Id;
 @Entity
 public class Account {
 	@Id @GeneratedValue
-	private long id;
+	private Long id;
 	@Column(length=255)
 	private String firstName;
 	@Column(length=255)
@@ -45,6 +45,12 @@ public class Account {
 
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
+	}
+	public void setID(Long id) {
+		this.id = id;
+	}
+	public Long getID() {
+		return this.id;
 	}
 
 }
