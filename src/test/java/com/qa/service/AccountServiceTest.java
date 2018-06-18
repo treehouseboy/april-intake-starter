@@ -31,11 +31,11 @@ public class AccountServiceTest {
 		Assert.assertEquals(service.getAccountMap().size(), 1);
 		service.addAccountFromMap(janeBloggs);
 		Assert.assertEquals(service.getAccountMap().size(), 2);
-		service.removeAccountFromMap(0);
+		service.removeAccountFromMap((long) 0);
 		Assert.assertEquals(service.getAccountMap().size(), 1);
-		service.removeAccountFromMap(1);
+		service.removeAccountFromMap((long) 1);
 		Assert.assertEquals(service.getAccountMap().size(), 0);
-		service.removeAccountFromMap(5);
+		service.removeAccountFromMap((long) 5);
 		Assert.assertEquals(service.getAccountMap().size(), 0);
 	}
 

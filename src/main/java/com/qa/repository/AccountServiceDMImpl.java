@@ -1,33 +1,34 @@
 package com.qa.repository;
 
+import static javax.transaction.Transactional.TxType.REQUIRED;
+import static javax.transaction.Transactional.TxType.SUPPORTS;
+
 import java.util.List;
-import java.util.Map;
 
-import com.google.gson.Gson;
-import com.qa.domain.Account;
-import com.qa.util.JSONUtil;
-
+import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import static javax.transaction.Transactional.TxType.SUPPORTS;
-import static javax.transaction.Transactional.TxType.REQUIRED;
+import com.qa.domain.Account;
+import com.qa.util.JSONUtil;
 
+@Default
 @Transactional(SUPPORTS)
-public class AccountServiceDMImpl {
+public class AccountServiceDMImpl implements AccountServiceImpl {
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
 	private JSONUtil util = new JSONUtil();
 
-	public List<Account> findAllAccounts() {
+	public String findAllAccounts() {
 		TypedQuery<Account> query = em.createQuery("SELECT a FROM Account a ORDER BY a.id DESC", Account.class);
-		return query.getResultList();
+		List<Account> accounts = (List<Account>)query.getResultList();
+		return util.getJSONForObject(accounts);
 	}
 
-	public Account findAnAccount(Long id) {
-		return em.find(Account.class, id);
+	public String findAnAccount(Long id) {
+		return util.getJSONForObject(em.find(Account.class, id));
 	}
 
 	@Transactional(REQUIRED)
@@ -38,7 +39,7 @@ public class AccountServiceDMImpl {
 	}
 
 	@Transactional(REQUIRED)
-	public void updateAnAccount(Long id, String field, String value) {
+	public String updateAnAccount(Long id, String field, String value) {
 
 		Account existingAccount = em.find(Account.class, id);
 		switch (field) {
@@ -49,6 +50,8 @@ public class AccountServiceDMImpl {
 			existingAccount.setSecondName(value);
 			break;
 		}
+		return util.getJSONForObject(existingAccount);
+		
 	}
 
 	@Transactional(REQUIRED)
