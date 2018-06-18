@@ -47,7 +47,6 @@ public class AccountServiceDMImpl {
 			break;
 		case "secondName":
 			existingAccount.setSecondName(value);
-			;
 			break;
 		}
 	}
