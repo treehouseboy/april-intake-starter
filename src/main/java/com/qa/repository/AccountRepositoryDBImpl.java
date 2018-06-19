@@ -16,7 +16,7 @@ import com.qa.util.JSONUtil;
 
 @Default
 @Transactional(SUPPORTS)
-public class AccountServiceDMImpl implements AccountService {
+public class AccountRepositoryDBImpl implements AccountRepository {
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
 	private JSONUtil util = new JSONUtil();
@@ -57,3 +57,4 @@ public class AccountServiceDMImpl implements AccountService {
 	}
 
 }
+

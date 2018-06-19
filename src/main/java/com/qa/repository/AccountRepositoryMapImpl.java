@@ -8,7 +8,7 @@ import com.qa.domain.Account;
 import com.qa.util.JSONUtil;
 
 @Alternative
-public class AccountServiceMapImpl implements AccountService{
+public class AccountRepositoryMapImpl implements AccountRepository{
 	
 	@Inject
 	private JSONUtil util;

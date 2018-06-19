@@ -1,6 +1,6 @@
 package com.qa.repository;
 
-public interface AccountService {
+public interface AccountRepository {
 	
 	public String findAllAccounts(); 
 
