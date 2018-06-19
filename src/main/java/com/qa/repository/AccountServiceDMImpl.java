@@ -16,7 +16,7 @@ import com.qa.util.JSONUtil;
 
 @Default
 @Transactional(SUPPORTS)
-public class AccountServiceDMImpl implements AccountServiceImpl {
+public class AccountServiceDMImpl implements AccountService {
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
 	private JSONUtil util = new JSONUtil();
@@ -39,19 +39,15 @@ public class AccountServiceDMImpl implements AccountServiceImpl {
 	}
 
 	@Transactional(REQUIRED)
-	public String updateAnAccount(Long id, String field, String value) {
+	public String updateAnAccount(Long id, String account) {
 
+		Account updatedAccount = util.getObjectForJSON(account, Account.class);
 		Account existingAccount = em.find(Account.class, id);
-		switch (field) {
-		case "firstName":
-			existingAccount.setFirstName(value);
-			break;
-		case "secondName":
-			existingAccount.setSecondName(value);
-			break;
+		if (account != null) {
+			existingAccount = updatedAccount;
+			em.merge(existingAccount);
 		}
-		return util.getJSONForObject(existingAccount);
-		
+		return "{\"message\": \"account sucessfully updated\"}";
 	}
 
 	@Transactional(REQUIRED)

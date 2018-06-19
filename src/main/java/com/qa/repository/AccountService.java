@@ -1,6 +1,6 @@
 package com.qa.repository;
 
-public interface AccountServiceImpl {
+public interface AccountService {
 	
 	public String findAllAccounts(); 
 
@@ -8,7 +8,7 @@ public interface AccountServiceImpl {
 
 	public String createAnAccount(String account); 
 
-	public String updateAnAccount(Long id, String field, String value); 
+	public String updateAnAccount(Long id, String account); 
 
 	public String deleteAnAccount(Long id); 
 

@@ -8,7 +8,7 @@ import com.qa.domain.Account;
 import com.qa.util.JSONUtil;
 
 @Alternative
-public class AccountServiceMapImpl implements AccountServiceImpl{
+public class AccountServiceMapImpl implements AccountService{
 	
 	@Inject
 	private JSONUtil util;
@@ -32,17 +32,10 @@ public class AccountServiceMapImpl implements AccountServiceImpl{
 	}
 
 	@Override
-	public String updateAnAccount(Long id, String field, String value) {
-		Account existingAccount = map.get(id);
-		switch(field) {
-		case "firstName":
-		existingAccount.setFirstName(value);
-		break;
-		case "secondName":
-		existingAccount.setSecondName(value);
-		break;
-		}
-		return util.getJSONForObject(existingAccount);
+	public String updateAnAccount(Long id, String account) {
+		Account updatedAccount = util.getObjectForJSON(account, Account.class);
+		map.put(id, updatedAccount);
+		return account;
 	}
 	
 	@Override
