@@ -23,7 +23,7 @@ public class AccountRepositoryDBImpl implements AccountRepository {
 
 	public String findAllAccounts() {
 		TypedQuery<Account> query = em.createQuery("SELECT a FROM Account a ORDER BY a.id DESC", Account.class);
-		List<Account> accounts = (List<Account>)query.getResultList();
+		List<Account> accounts = (List<Account>) query.getResultList();
 		return util.getJSONForObject(accounts);
 	}
 
@@ -33,9 +33,13 @@ public class AccountRepositoryDBImpl implements AccountRepository {
 
 	@Transactional(REQUIRED)
 	public String createAnAccount(String account) {
-		Account newAccount = util.getObjectForJSON(account, Account.class);
-		em.persist(newAccount);
-		return "{\"message\": \"Account successfully added\"}";
+		if (account != null) {
+			Account newAccount = util.getObjectForJSON(account, Account.class);
+			em.persist(newAccount);
+			return "{\"message\": \"Account successfully added\"}";
+		} else {
+			return "{\"message\": \"Error\"}";
+		}
 	}
 
 	@Transactional(REQUIRED)
@@ -46,15 +50,20 @@ public class AccountRepositoryDBImpl implements AccountRepository {
 		if (account != null) {
 			existingAccount = updatedAccount;
 			em.merge(existingAccount);
+			return "{\"message\": \"account sucessfully updated\"}";
+		} else {
+			return "{\"message\": \"Error\"}";
 		}
-		return "{\"message\": \"account sucessfully updated\"}";
 	}
 
 	@Transactional(REQUIRED)
 	public String deleteAnAccount(Long id) {
-		em.remove(em.find(Account.class, id));
-		return "{\"message\": \"Account successfully deleted\"}";
+		if (id != null) {
+			em.remove(em.find(Account.class, id));
+			return "{\"message\": \"Account successfully deleted\"}";
+		} else {
+			return "{\"message\": \"Error\"}";
+		}
 	}
 
 }
-
