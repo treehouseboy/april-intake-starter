@@ -4,48 +4,44 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.inject.Inject;
+
+import org.apache.log4j.Logger;
+
 import com.qa.domain.Account;
+import com.qa.repository.AccountRepository;
 
 public class AccountService {
 
-	private Map<Long, Account> accountMap;
+	private static final Logger LOGGER = Logger.getLogger(AccountService.class);
 
-	private long count = 0;
+	@Inject
+	private AccountRepository repo;
 
-	public AccountService() {
-		accountMap = new HashMap<Long, Account>();
+	public String getAllAccounts() {
+		LOGGER.info("In AccountServiceImpl getAllAccounts ");
+		return repo.findAllAccounts();
+	}
+	
+	public String getOneAccount(Long id) {
+		return repo.findAnAccount(id);
 	}
 
-	public void addAccountFromMap(Account userAccount) {
-		userAccount.setID(count);
-		accountMap.put(userAccount.getID(), userAccount);
-		count++;
+	public String addAccount(String account) {
+		return repo.createAnAccount(account);
 	}
 
-	public void removeAccountFromMap(Long i) {
-		boolean countExists = accountMap.containsKey(i);
-		if (countExists) {
-			accountMap.remove(i);
-		}
+	public String updateAccount(Long id, String account) {
+		return repo.updateAnAccount(id, account);
 	}
 
-	public Map<Long, Account> getAccountMap() {
-		return accountMap;
+	public String deleteAccount(Long id) {
+		return repo.deleteAnAccount(id);
+
 	}
 
-	public int getNumberOfAccountWithFirstName(String firstNameOfAccount) {
-		return (int) accountMap.values().stream()
-				.filter(eachAccount -> eachAccount.getFirstName().equals(firstNameOfAccount)).count();
-	}
-
-	public Boolean checkBlockedAccount() {
-		Boolean accountBlock = false;
-		for (Entry<Long, Account> entry : accountMap.entrySet()) {
-			if(entry.getValue().getAccountNumber().equals("9999")){
-				accountBlock = true;
-			}
-		}
-		return accountBlock;
+	public void setRepo(AccountRepository repo) {
+		this.repo = repo;
 	}
 
 }
